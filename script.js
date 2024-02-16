@@ -178,4 +178,39 @@ class CardDeck {
 const deck = new CardDeck(".deck", ".hand");
 
 // Take a look at the deck object and its methods.
-console.log(deck);
+const urlParams = new URLSearchParams(window.location.search);
+
+// Check cards param
+const cardsParam = urlParams.get('cards');
+if (cardsParam) {
+	const cards = cardsParam.split(" ");
+	deck.filter('id', cards)
+}
+
+// Check suites param
+const suitsParam = urlParams.get('suits');
+if (suitsParam) {
+	const suits = suitsParam.split(" ");
+	deck.filter('suit', suits)
+}
+
+// Check ranks param
+const ranksParam = urlParams.get('ranks');
+if (ranksParam) {
+	const ranks = ranksParam.split(" ");
+	deck.filter('rank', ranks.map((rank) => parseInt(rank)))
+}
+
+// Limit filtered cards
+const limitParam = urlParams.get('limit');
+
+if (limitParam) {
+	const limit = parseInt(limitParam)
+	deck.limit(limit)
+}
+
+// Sort cards
+deck.sort()
+
+// Draw filtered, limited and sorted cards
+deck.drawFiltered()
